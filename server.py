@@ -1,21 +1,36 @@
-import socket
+from models import Server
 
-
-serversocket = []
-host = "0.0.0.0"
-port = 8000
 
 def main_loop():
+    server = Server()
     try:
-        serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        serversocket.bind((host, port))
-        serversocket.listen(5)
+
+        server.listen()
         print('server started and listening')
-        while 1:
-            clientsocket, address = serversocket.accept()
-            msg = clientsocket.recv(1024).decode()
-            print('Client sent:', msg)
-            msg = input('Say something: ')
-            clientsocket.send('Server response: {}\n'.format(msg).encode())
+
+        # Not working, check this out
+        def create_thread(server):
+            try:
+                while True:
+                    print('Thread started, waiting for messages')
+                    clientsocket, address = server.accept()
+                    msg = clientsocket.recv(1024).decode()
+                    print('Client sent: ', msg)
+            except:
+                print('\nCTRL+C')
+
+        from threading import Thread
+        server_thread = Thread(target=create_thread, args=(server, ))
+        server_thread.start()
+        print('Out thread')
+
     except:
-        serversocket.close()
+        server.close_socket()
+
+'''
+clientsocket, address = server.accept()
+msg = clientsocket.recv(1024).decode()
+print('Client sent:', msg)
+msg = input('Say something: ')
+clientsocket.send('Server response: {}\n'.format(msg).encode())
+'''

@@ -5,7 +5,12 @@ def prompt():
     sys.stdout.write('<You> ')
     sys.stdout.flush()
 
+
 def main_loop():
+    pass
+
+
+def main_loop2():
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(2)
