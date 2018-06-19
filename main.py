@@ -7,10 +7,11 @@ from errors import NumberRequiredException, InvalidCodeException
 
 def show_menu():
     try:
-        return ((input('1. IP:\n ')), int(input('2. PORT:\n ')))
-    except ValueError:
-        # TODO: 00
-        NumberRequiredException()
+        str = input('Address: ')
+        idx = str.index(':')
+        return ((str[0:idx]), int(str[idx+1:]))
+    except:
+        pass
 
 
 def switch(value: int):
@@ -25,11 +26,14 @@ def switch(value: int):
         InvalidCodeException()
 
 if __name__ == '__main__':
-    ip, port = show_menu()
-    server_side(ip, port)
+    try:
+        server_side()
 
-    ip, port = show_menu()
-    client_side(ip, port)
+        ip, port = show_menu()
+        client_side(ip, port)
+    except:
+        pass
+
 
 '''
 

@@ -8,7 +8,6 @@ def main_loop(ip = '0.0.0.0', port = 8000):
         server.listen()
         print('server started and listening')
 
-        # Not working, check this out
         def create_thread(server):
             try:
                 while True:
