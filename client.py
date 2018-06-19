@@ -1,45 +1,8 @@
-import socket, select, string, sys
+from models import Client
 
-
-def prompt():
-    sys.stdout.write('<You> ')
-    sys.stdout.flush()
-
-
-def main_loop():
-    pass
-
-
-def main_loop2():
-
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.settimeout(2)
-
-    try:
-        s.connect(('0.0.0.0', 8000))
-    except:
-        print('Unable to connect')
-        sys.exit()
-
-    print('Connected to remote host. Start sending messages')
-    prompt()
-
+def main_loop(ip, port):
     while 1:
-        socket_list = [sys.stdin, s]
-
-        read_sockets, write_sockets, error_sockets = select.select(socket_list, [], [])
-
-        for sock in read_sockets:
-            if sock == s:
-                data = sock.recv(4096)
-                if not data:
-                    print('\nDisconnected from chat server')
-                    sys.exit()
-                else:
-                    sys.stdout.write(data.decode())
-                    prompt()
-
-            else:
-                msg = sys.stdin.readline()
-                s.send(msg.encode())
-                prompt()
+        client = Client(ip, port)
+        client.connect()
+        msg = input('<You> ')
+        client.send_message(msg)

@@ -7,7 +7,7 @@ from errors import NumberRequiredException, InvalidCodeException
 
 def show_menu():
     try:
-        return int(input('1. Send message:\n '))
+        return ((input('1. IP:\n ')), int(input('2. PORT:\n ')))
     except ValueError:
         # TODO: 00
         NumberRequiredException()
@@ -25,14 +25,11 @@ def switch(value: int):
         InvalidCodeException()
 
 if __name__ == '__main__':
-    # Shows the menu and catch the return entered by the user
-    opt = show_menu()
+    ip, port = show_menu()
+    server_side(ip, port)
 
-    # Chooses which program should be started based on the user data entry (CLIENT/SERVER)
-    switch(opt)
-
-
-    print(input('digita ai brodi'))
+    ip, port = show_menu()
+    client_side(ip, port)
 
 '''
 
